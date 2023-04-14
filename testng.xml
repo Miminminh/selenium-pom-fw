@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="D:/projects/sj/selenium-pom-framework">
+        <classes>
+            <class name="testcase.RegisterPage">
+                <methods>
+                    <include name="TC_01_RegisterWithEmptyData"/>
+                    <include name="TC_02_RegisterWithInvalidPhoneNumber"/>
+                </methods>
+            </class>
+            <class name="com.allure.Testcase1">
+                <methods>
+                    <include name="testMethod1"/>
+                </methods>
+            </class>
+            <class name="com.allure.Testcase2">
+                <methods>
+                    <include name="testMethod2"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
