@@ -1,18 +1,19 @@
 package pageobject;
 
-import action.BaseSetup;
+import base.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageui.RegisterPageUI;
 
-public class RegisterPageObject extends BaseSetup {
+public class RegisterPageObject extends BasePage {
     public WebDriver driver;
     public WebDriverWait wait;
 
-    public RegisterPageObject() {
-        driver = initWebDriver();
-        wait = initWebDriverWait(driver);
+    public RegisterPageObject(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
+        this.driver = driver;
+        this.wait = wait;
     }
 
     @Step("Click to first name field")

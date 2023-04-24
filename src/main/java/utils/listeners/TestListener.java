@@ -1,8 +1,9 @@
 package utils.listeners;
 
-import action.BaseSetup;
-import com.aventstack.extentreports.Status;
+import base.BaseTest;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
+import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -10,9 +11,11 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import java.util.Objects;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 
-public class TestListener extends BaseSetup implements ITestListener {
+public class TestListener extends BaseTest implements ITestListener {
     private static String getTestMethodName(ITestResult iTestResult) {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
     }
@@ -53,7 +56,7 @@ public class TestListener extends BaseSetup implements ITestListener {
 
         //Get driver from BaseTest and assign to local webdriver variable.
         Object testClass = iTestResult.getInstance();
-        WebDriver driver = ((BaseSetup) testClass).getDriver();
+        WebDriver driver = ((BaseTest) testClass).getDriver();
 
         //Allure ScreenShotRobot and SaveTestLog
         if (driver != null) {
@@ -63,6 +66,31 @@ public class TestListener extends BaseSetup implements ITestListener {
 
         //Save a log on allure.
         saveTextLog(getTestMethodName(iTestResult) + " failed and screenshot taken!");
+    }
+
+    public void allureVid() {
+        try {
+            byte[] byteArr = IOUtils.toByteArray(new FileInputStream("test-recordings/Register Page-17-04-2023 13-50-32.avi"));
+            Allure.addAttachment("attachment name", "video/mp4", new ByteArrayInputStream(byteArr), "mp4");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult iTestResult) {
+        //Get driver from BaseTest and assign to local webdriver variable.
+        Object testClass = iTestResult.getInstance();
+        WebDriver driver = ((BaseTest) testClass).getDriver();
+
+        //Allure ScreenShotRobot and SaveTestLog
+        if (driver != null) {
+            System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
+            saveScreenshotPNG(driver);
+        }
+
+        //Save a log on allure.
+        saveTextLog(getTestMethodName(iTestResult) + " succeed and screenshot taken!");
     }
 
 }
