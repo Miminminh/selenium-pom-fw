@@ -11,11 +11,12 @@
     <test verbose="2" preserve-order="true" name="D:/projects/sj/selenium-pom-framework">
         <classes>
             <class name="testcase.RegisterPage">
-                <methods>
-                    <include name="TC_01_RegisterWithEmptyData"/>
-                    <include name="TC_02_RegisterWithInvalidPhoneNumber"/>
-                </methods>
+<!--                <methods>-->
+<!--                    <include name="TC_01_RegisterWithEmptyData"/>-->
+<!--                    <include name="TC_02_RegisterWithInvalidPhoneNumber"/>-->
+<!--                </methods>-->
             </class>
+
         </classes>
     </test>
 </suite>

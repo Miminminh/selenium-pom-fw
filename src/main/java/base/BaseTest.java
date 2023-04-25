@@ -1,14 +1,21 @@
 package base;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
@@ -17,22 +24,25 @@ public class BaseTest {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    public void setDriver(String browser, String appURL) {
+    public void setDriver(String browser, String appURL, boolean headlessFlag) {
         switch (browser) {
             case "chrome":
-                driver = initChromeDriver(appURL);
+                driver = initChromeDriver(appURL, headlessFlag);
                 break;
             case "firefox":
-                driver = initFirefoxDriver(appURL);
+                driver = initFirefoxDriver(appURL, headlessFlag);
+                break;
+            case "edge":
+                driver = initEdgeDriver(appURL, headlessFlag);
                 break;
             default:
                 System.out.println("browser : " + browser + " is invalid, Launching Chrome as browser of choice...");
-                driver = initFirefoxDriver(appURL);
+                driver = initChromeDriver(appURL, headlessFlag);
         }
     }
 
     public void setWait() {
-        wait = new WebDriverWait(driver, 30);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
     public WebDriver getDriver() {
@@ -43,33 +53,59 @@ public class BaseTest {
         return wait;
     }
 
-    private WebDriver initChromeDriver(String appURL) {
+    private WebDriver initChromeDriver(String appURL, boolean headlessFlag) {
         System.out.println("Launching google chrome...");
-        System.setProperty("webdriver.chrome.driver", projectPath + "\\drivers\\chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        // set chrome as Headless
+        if (headlessFlag) {
+            options.addArguments("--headless");
+        }
+        ChromeDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 //        driver.navigate().to(appURL);
         return driver;
     }
 
-    private WebDriver initFirefoxDriver(String appURL) {
+    private WebDriver initFirefoxDriver(String appURL, boolean headlessFlag) {
         System.out.println("Launching firefox...");
-        System.setProperty("webdriver.gecko.driver", projectPath + "\\drivers\\chromedriver.exe");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.firefoxdriver().setup();
+        FirefoxOptions options = new FirefoxOptions();
+        // set firefox as Headless
+        if (headlessFlag) {
+            options.setHeadless(true);
+        }
+        WebDriver driver = new FirefoxDriver(options);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 //        driver.navigate().to(appURL);
         return driver;
     }
 
-    @Parameters({"browserType", "appURL"})
-    @BeforeClass
-    public void initializeTestBaseSetup(@Optional("chrome")String browserType, @Optional("https://google.com") String appURL) {
-        try {
-            setDriver(browserType, appURL);
-            setWait();
+    private WebDriver initEdgeDriver(String appURL, boolean headlessFlag) {
+        System.out.println("Launching edge...");
+        WebDriverManager.edgedriver().setup();
+        EdgeOptions options = new EdgeOptions();
 
+
+        // set edge as Headless
+        if (headlessFlag) {
+            options.addArguments("--headless");
+        }
+        WebDriver driver = new EdgeDriver(options);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+//        driver.navigate().to(appURL);
+        return driver;
+    }
+
+    @Parameters({"browserType", "appURL", "headlessFlag"})
+    @BeforeClass
+    public void initializeTestBaseSetup(@Optional("chrome") String browserType, @Optional("https://google.com") String appURL, @Optional("false") boolean headlessFlag) {
+        try {
+            setDriver(browserType, appURL, headlessFlag);
+            setWait();
         } catch (Exception e) {
             System.out.println("Error....." + e.getStackTrace());
         }
