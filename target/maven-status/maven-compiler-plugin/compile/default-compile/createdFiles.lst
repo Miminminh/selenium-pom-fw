@@ -1,5 +1,0 @@
-pageui\RegisterPageUI.class
-testcase\RegisterPage.class
-action\BaseSetup.class
-utils\listeners\TestListener.class
-pageobject\RegisterPageObject.class

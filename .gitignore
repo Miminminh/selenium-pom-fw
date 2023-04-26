@@ -1,6 +1,3 @@
-allure-results/
-target/
-.idea/
 ExtentReports/
 test-recordings/
 logs/
