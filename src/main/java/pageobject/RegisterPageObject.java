@@ -129,5 +129,8 @@ public class RegisterPageObject extends BasePage {
     public boolean checkEmailErrorDisplayed() {
         return isDisplayed(driver, RegisterPageUI.XPATH_EMAIL_ERROR);
     }
-
+    public boolean checkConfirmationCodeInputDisplayed() {
+        waitElementToBeVisibility(wait, RegisterPageUI.XPATH_CONFIRMATION_CODE_INPUT);
+        return isDisplayed(driver, RegisterPageUI.XPATH_CONFIRMATION_CODE_INPUT);
+    }
 }

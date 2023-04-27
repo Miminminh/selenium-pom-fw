@@ -9,9 +9,10 @@ public interface RegisterPageUI {
 	String XPATH_BUTTON_REGISTER = "//button[@name='websubmit']";
 	String XPATH_FIRST_NAME_ERROR = "//div[contains(text(),'s your name?')]";
 	String XPATH_EMAIL_ERROR = "//div[contains(text(),'use this when you log in')]";
-	String XPATH_PHONE_FORMAT_ERROR = "//div[contains(text(),'Please enter a valid mobile number')]";
+	String XPATH_PHONE_FORMAT_ERROR = "//div[contains(text(),'Please enter a valid mobile number1')]";
 	String XPATH_CREATE_ACC_BUTTON = "//a[@data-testid='open-registration-form-button']";
 	String XPATH_FEMALE = "//label[text()='Female']/following-sibling::input";
+	String XPATH_CONFIRMATION_CODE_INPUT = "//h2[@class='uiHeaderTitle']";
 	String XPATH_BIRTHDAY_DAY = "//select[@name='birthday_day']";
 	String XPATH_BIRTHDAY_MONTH = "//select[@name='birthday_month']";
 	String XPATH_BIRTHDAY_YEAR = "//select[@name='birthday_year']";

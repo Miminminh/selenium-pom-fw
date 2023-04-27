@@ -16,7 +16,6 @@
 <!--                    <include name="TC_02_RegisterWithInvalidPhoneNumber"/>-->
 <!--                </methods>-->
             </class>
-
         </classes>
     </test>
 </suite>

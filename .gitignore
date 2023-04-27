@@ -1,3 +1,7 @@
 ExtentReports/
 test-recordings/
 logs/
+.idea/
+allure-results/
+target/
+*.iml

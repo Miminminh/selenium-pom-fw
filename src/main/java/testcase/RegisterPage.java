@@ -18,8 +18,10 @@ import org.testng.annotations.Test;
 import pageobject.RegisterPageObject;
 import utils.extendreports.ExtentTestManager;
 import utils.listeners.ExtentReportListener;
+import utils.listeners.TestListener;
+import utils.record.RecordVideo;
 
-@Listeners({ExtentReportListener.class})
+@Listeners({ExtentReportListener.class, TestListener.class})
 @Epic("Regression Tests")
 @Feature("Register Tests")
 public class RegisterPage extends BaseTest {
@@ -73,7 +75,7 @@ public class RegisterPage extends BaseTest {
         registerPO.getFBLink();
         registerPO.clickToCreateAccountButton();
 
-        registerPO.sendKeysToFirstName("");
+        registerPO.sendKeysToFirstName("Luong");
         registerPO.sendKeysToLastName("Minh");
         registerPO.sendKeysToEmail("03488888");
         registerPO.sendKeysToPassword("Test@12345");
@@ -94,27 +96,26 @@ public class RegisterPage extends BaseTest {
         }
     }
 
-//
-//    @Test
-//    public void TC_03_LoginFormDisplayed() {
-//        getFBLink();
-//        clickToCreateAccountButton();
-//
-//        sendKeysToFirstName("Luong");
-//        sendKeysToLastName("Minh");
-//        sendKeysToEmail("0348886789");
-//        sendKeysToPassword("Test@123456");
-//
-//        selectBirthDayDayDropdown("24");
-//        selectBirthDayMonthDropdown("2");
-//        selectBirthDayYearDropdown("2000");
-//        clickToFemaleRadioButton();
-//
-//        clickToRegisterSubmitButton();
-//
-//        waitFacebookTitle();
-//        Assert.assertNotEquals(getTitle(), "Facebook");
-//    }
+
+    @Test
+    public void TC_03_LoginFormDisplayed() {
+        registerPO.getFBLink();
+        registerPO.clickToCreateAccountButton();
+
+        registerPO.sendKeysToFirstName("Luong");
+        registerPO.sendKeysToLastName("Minh");
+        registerPO.sendKeysToEmail("0348886789");
+        registerPO.sendKeysToPassword("Test@123456");
+
+        registerPO.selectBirthDayDayDropdown("24");
+        registerPO.selectBirthDayMonthDropdown("2");
+        registerPO.selectBirthDayYearDropdown("2000");
+        registerPO.clickToFemaleRadioButton();
+
+        registerPO.clickToRegisterSubmitButton();
+        registerPO.waitFacebookTitle();
+        Assert.assertEquals(registerPO.getTitle(), "Facebook");
+    }
 
 
     @AfterClass

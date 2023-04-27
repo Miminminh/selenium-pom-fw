@@ -21,7 +21,7 @@ public class ExtentReportListener extends BaseTest implements ITestListener {
         return result.getMethod().getDescription() != null ? result.getMethod().getDescription() : getTestMethodName(result);
     }
 
-    public WebDriver getDriver(ITestResult result){
+    public WebDriver getDriver(ITestResult result) {
         Object testClass = result.getInstance();
         WebDriver driver = ((BaseTest) testClass).getDriver();
         return driver;
@@ -29,10 +29,11 @@ public class ExtentReportListener extends BaseTest implements ITestListener {
 
     @Override
     public void onStart(ITestContext iTestContext) {
+        String name = iTestContext.getCurrentXmlTest().getClasses().stream().findFirst().get().getName();
         Log.info("Start testing " + iTestContext.getName());
         //Gọi hàm startRecord video trong CaptureHelpers class
         try {
-            RecordVideo.startRecord(iTestContext.getName());
+            RecordVideo.startRecord(name);
         } catch (Exception e) {
             e.printStackTrace();
         }

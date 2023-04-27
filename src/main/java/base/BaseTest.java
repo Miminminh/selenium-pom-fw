@@ -1,6 +1,7 @@
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,11 +11,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
@@ -98,6 +98,14 @@ public class BaseTest {
         driver.manage().window().maximize();
 //        driver.navigate().to(appURL);
         return driver;
+    }
+
+    @BeforeTest
+    public void removeOldAllureReports() throws IOException {
+        File file = new File("./allure-results");
+        if (file.exists()) {
+            FileUtils.cleanDirectory(file);
+        }
     }
 
     @Parameters({"browserType", "appURL", "headlessFlag"})
